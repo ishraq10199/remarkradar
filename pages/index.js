@@ -14,25 +14,21 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main className={styles.mymain}>
         <div className={styles.center}>
           <div className={styles.description}>
             <h1>REMARK RADAR &nbsp;</h1>
           </div>
         </div>
         <div className={styles.center}>
-          <div className={styles.description}>
+          <div className={styles.mydescription}>
             <p align="center">
               Remark Radar is an app that lets anyone add <br />
-              interactivity to their website by adding a comments section.
-              <br />
-              <br />
-              <hr />
-              <br />
-              This site is a work in progress...
+              interactivity to their website by adding a comments section. This
+              site is a work in progress...
             </p>
           </div>
-        </div>{" "}
+        </div>
         <div className={styles.center}>
           <div className={styles.description}>
             <h3> - Ishraq Hasan &nbsp;</h3>
