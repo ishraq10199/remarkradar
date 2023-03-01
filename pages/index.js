@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import { Button, Code, Heading, Box, Text, Flex } from "@chakra-ui/react";
 import { useAuth } from "@/lib/auth";
-import Logo from "@/styles/logo";
+import Logo from "@/styles/Logo";
 
 const inter = Inter({
   subsets: ["latin"],
