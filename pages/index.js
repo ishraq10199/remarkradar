@@ -1,43 +1,39 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { Button, Code, Heading, Box, Text, Flex } from "@chakra-ui/react";
+import { useAuth } from "@/lib/auth";
+import Logo from "@/styles/logo";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
 
 export default function Home() {
+  const auth = useAuth();
   return (
-    <>
+    <Flex
+      as="main"
+      direction="column"
+      align="center"
+      justify="center"
+      h="100vh"
+    >
       <Head>
         <title>Remark Radar</title>
-        <meta
-          name="description"
-          content="A work in progress by Ishraq Hasan."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Comment, interact, engage!" />
       </Head>
-      <main className={styles.mymain}>
-        <div className={styles.center}>
-          <div className={styles.description}>
-            <h1>REMARK RADAR &nbsp;</h1>
-          </div>
-        </div>
-        <div className={styles.center}>
-          <div className={styles.mydescription}>
-            <p align="center">
-              Remark Radar is an app that lets anyone add <br />
-              interactivity to their website by adding a comments section. This
-              site is a work in progress...
-            </p>
-          </div>
-        </div>
-        <div className={styles.center}>
-          <div className={styles.description}>
-            <h3> - Ishraq Hasan &nbsp;</h3>
-          </div>
-        </div>
-      </main>
-    </>
+      <Logo name="logo" boxSize={16} color="black" />
+      <Heading>REMARK RADAR</Heading>
+      {auth.user ? (
+        <Button mt={4} onClick={(e) => auth.signout()}>
+          Sign Out
+        </Button>
+      ) : (
+        <Button mt={4} onClick={(e) => auth.signinWithGithub()}>
+          Sign In
+        </Button>
+      )}
+    </Flex>
   );
 }
