@@ -2,7 +2,8 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import { Button, Code, Heading, Box, Text, Flex } from "@chakra-ui/react";
 import { useAuth } from "@/lib/auth";
-import Logo from "@/styles/Logo";
+import Logo from "@/components/Logo";
+import EmptyState from "@/components/EmptyState";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +24,7 @@ export default function Home() {
         <title>Remark Radar</title>
         <meta name="description" content="Comment, interact, engage!" />
       </Head>
-      <Logo name="logo" boxSize={16} color="black" />
+      <Logo boxSize={16} color="black" />
       <Heading>REMARK RADAR</Heading>
       {auth.user ? (
         <Button mt={4} onClick={(e) => auth.signout()}>
