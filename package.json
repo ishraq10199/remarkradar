@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "date-fns": "^2.29.3",
     "eslint": "8.34.0",
     "eslint-config-next": "13.2.1",
     "firebase": "^9.17.1",
@@ -21,6 +22,7 @@
     "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.43.3"
+    "react-hook-form": "^7.43.3",
+    "swr": "^2.0.4"
   }
 }
