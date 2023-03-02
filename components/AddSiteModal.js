@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import useSWR, { mutate } from "swr";
 import { useForm } from "react-hook-form";
 import {
   Modal,
@@ -18,21 +18,23 @@ import {
 
 import { createSite } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
+import fetcher from "@/utils/fetcher";
 
-const AddSiteModal = () => {
+const AddSiteModal = ({ children }) => {
+  const { data } = useSWR("/api/sites", fetcher);
   const toast = useToast();
   const { user } = useAuth();
-  const initialRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register } = useForm();
 
-  const onCreateSite = async ({ site, url }) => {
-    await createSite({
+  const onCreateSite = async ({ name, url }) => {
+    const newSite = {
       authorId: user.uid,
       createdAt: new Date().toISOString(),
-      site,
+      name,
       url,
-    });
+    };
+    createSite(newSite);
     toast({
       title: "Success!",
       description: "We've added your site.",
@@ -40,15 +42,35 @@ const AddSiteModal = () => {
       duration: 5000,
       isClosable: true,
     });
+    mutate(
+      "/api/sites",
+      async (data) => {
+        return { sites: [...data.sites, newSite] };
+      },
+      // If revalidate is true (default behavior), the site will try to revalidate
+      // We don't need that, since browser needs to load from cache for now
+      // revalidation can happen later
+      { revalidate: false }
+    );
     onClose();
   };
 
   return (
     <>
-      <Button fontWeight="medium" maxW="200px" onClick={onOpen}>
-        Add Your First Site
+      <Button
+        onClick={onOpen}
+        backgroundColor="gray.900"
+        color="white"
+        fontWeight="medium"
+        _hover={{ bg: "gray.700" }}
+        _active={{
+          bg: "gray.800",
+          transform: "scale(0.95)",
+        }}
+      >
+        {children}
       </Button>
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
           <ModalHeader fontWeight="bold">Add Site</ModalHeader>
@@ -57,10 +79,9 @@ const AddSiteModal = () => {
             <FormControl>
               <FormLabel>Name</FormLabel>
               <Input
-                ref={initialRef}
                 placeholder="My site"
-                {...register("site", {
-                  required: true,
+                {...register("name", {
+                  required: "Required",
                 })}
               />
             </FormControl>
