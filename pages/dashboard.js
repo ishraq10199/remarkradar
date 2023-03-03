@@ -15,6 +15,7 @@ const inter = Inter({
 export default function Dashboard() {
   const auth = useAuth();
   const { data } = useSWR("/api/sites", fetcher);
+
   if (!auth.user) {
     return "Loading...";
   }
