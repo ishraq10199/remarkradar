@@ -13,6 +13,8 @@ export async function getStaticProps(context) {
   return {
     props: {
       initialFeedback: feedback,
+      // ISR, every 1 second
+      unstable_revalidate: 1,
     },
   };
 }

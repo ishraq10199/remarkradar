@@ -13,12 +13,12 @@ const inter = Inter({
 });
 
 export default function Dashboard() {
-  const auth = useAuth();
-  const { data } = useSWR("/api/sites", fetcher);
+  const { user } = useAuth();
+  const { data } = useSWR(
+    user ? ["/api/sites", user.token] : null,
+    ([url, token]) => fetcher(url, token)
+  );
 
-  if (!auth.user) {
-    return "Loading...";
-  }
   if (!data) {
     return (
       <DashboardShell>

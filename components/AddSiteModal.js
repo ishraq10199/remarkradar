@@ -43,9 +43,9 @@ const AddSiteModal = ({ children }) => {
       isClosable: true,
     });
     mutate(
-      "/api/sites",
+      ["/api/sites", user.token],
       async (data) => {
-        return { sites: [...data.sites, newSite] };
+        return { sites: [newSite, ...data.sites] };
       },
       // If revalidate is true (default behavior), the site will try to revalidate
       // We don't need that, since browser needs to load from cache for now

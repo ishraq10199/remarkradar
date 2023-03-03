@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Button, Code, Heading, Box, Text, Flex } from "@chakra-ui/react";
 import { useAuth } from "@/lib/auth";
 import Logo from "@/components/Logo";
-import EmptyState from "@/components/EmptyState";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +35,16 @@ export default function Home() {
           Sign In
         </Button>
       )}
+      <Script
+        id="redirectScript"
+        dangerouslySetInnerHTML={{
+          __html: `
+              if (document.cookie && document.cookie.includes('remarkradar-auth')) {
+                window.location.href = "/dashboard"
+              }
+            `,
+        }}
+      ></Script>
     </Flex>
   );
 }
