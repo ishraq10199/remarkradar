@@ -30,9 +30,7 @@ const DashboardShell = ({ children }) => {
               variant="ghost"
               mr={2}
               onClick={() => {
-                signout().then(() => {
-                  window.location.href = "/";
-                });
+                signout();
               }}
             >
               Log Out
