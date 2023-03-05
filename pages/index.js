@@ -44,7 +44,7 @@ export default function Home() {
           as={Link}
           href="/dashboard"
         >
-          View Dashboard
+          Go to Dashboard
         </Button>
       ) : (
         <>
