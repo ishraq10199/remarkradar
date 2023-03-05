@@ -1,19 +1,8 @@
 import React from "react";
-import {
-  Flex,
-  Stack,
-  Link,
-  Avatar,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Heading,
-  Button,
-} from "@chakra-ui/react";
-
+import { Flex, Stack, Link, Avatar, Button } from "@chakra-ui/react";
+import NextLink from "next/link";
 import Logo from "./Logo";
 import { useAuth } from "@/lib/auth";
-import AddSiteModal from "./AddSiteModal";
 
 const DashboardShell = ({ children }) => {
   const { user, signout } = useAuth();
@@ -27,13 +16,25 @@ const DashboardShell = ({ children }) => {
       >
         <Stack spacing={4} flexDirection="row" alignItems="center" isInline>
           <Logo boxSize={10} color="black" />
-          <Link>Sites</Link>
-          <Link>Feedback</Link>
+          <Link as={NextLink} href={"/dashboard"} passHref={true}>
+            Sites
+          </Link>
+          <Link as={NextLink} href={"/feedback"} passHref={true}>
+            Feedback
+          </Link>
         </Stack>
         <Flex alignItems="center">
           {/* <Link mr={4}>Account</Link> */}
           {user && (
-            <Button variant="ghost" mr={2} onClick={() => signout()}>
+            <Button
+              variant="ghost"
+              mr={2}
+              onClick={() => {
+                signout().then(() => {
+                  window.location.href = "/";
+                });
+              }}
+            >
               Log Out
             </Button>
           )}
@@ -50,16 +51,6 @@ const DashboardShell = ({ children }) => {
       >
         <Flex maxWidth="800px" w="100%" ml="auto" mr="auto">
           <Flex flexDirection="column" maxWidth="800px" w="100%">
-            <Breadcrumb>
-              <BreadcrumbItem>
-                <BreadcrumbLink color="gray.700">Sites</BreadcrumbLink>
-              </BreadcrumbItem>
-            </Breadcrumb>
-            <Flex justifyContent="space-between">
-              <Heading mb={8}>My Sites</Heading>
-
-              <AddSiteModal>+ Add Site</AddSiteModal>
-            </Flex>
             {children}
           </Flex>
         </Flex>

@@ -5,6 +5,10 @@ const fetcher = async (url, token) => {
     credentials: "same-origin",
   });
 
+  if (!res.ok) {
+    console.log(res);
+  }
+
   return res.json();
 };
 

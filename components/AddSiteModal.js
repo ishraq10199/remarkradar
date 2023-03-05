@@ -21,7 +21,11 @@ import { useAuth } from "@/lib/auth";
 import fetcher from "@/utils/fetcher";
 
 const AddSiteModal = ({ children }) => {
-  const { data } = useSWR("/api/sites", fetcher);
+  const auth = useAuth();
+  const { data } = useSWR(
+    auth.user ? ["/api/sites", auth.user.token] : null,
+    ([url, token]) => fetcher(url, token)
+  );
   const toast = useToast();
   const { user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,7 +38,6 @@ const AddSiteModal = ({ children }) => {
       name,
       url,
     };
-    createSite(newSite);
     toast({
       title: "Success!",
       description: "We've added your site.",
@@ -42,7 +45,9 @@ const AddSiteModal = ({ children }) => {
       duration: 5000,
       isClosable: true,
     });
-    mutate(
+    onClose();
+    await createSite(newSite);
+    await mutate(
       ["/api/sites", user.token],
       async (data) => {
         return { sites: [newSite, ...data.sites] };
@@ -52,7 +57,6 @@ const AddSiteModal = ({ children }) => {
       // revalidation can happen later
       { revalidate: false }
     );
-    onClose();
   };
 
   return (
