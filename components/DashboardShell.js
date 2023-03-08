@@ -13,6 +13,7 @@ const DashboardShell = ({ children }) => {
         backgroundColor="white"
         alignItems="center"
         p={4}
+        borderTop="5px solid #9b00f9"
       >
         <Stack spacing={4} flexDirection="row" alignItems="center" isInline>
           <Logo boxSize={10} color="black" />
@@ -36,7 +37,12 @@ const DashboardShell = ({ children }) => {
               Log Out
             </Button>
           )}
-          <Avatar size="sm" src={user?.photoURL} />
+          <Avatar
+            size="sm"
+            src={user?.photoURL}
+            as={NextLink}
+            href={"/account"}
+          />
         </Flex>
       </Flex>
       <Flex

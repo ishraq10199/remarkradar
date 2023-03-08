@@ -7,6 +7,7 @@ import SiteTableSkeleton from "@/components/SiteTableSkeleton";
 import fetcher from "@/utils/fetcher";
 import SiteTable from "@/components/SiteTable";
 import SiteTableHeader from "@/components/SiteTableHeader";
+import UpgradeEmptyState from "@/components/UpgradeEmptyState";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,6 +20,7 @@ export default function Dashboard() {
     user ? ["/api/sites", user.token] : null,
     ([url, token]) => fetcher(url, token)
   );
+  const isPaidAccount = user?.stripeRole !== "free";
 
   if (!data) {
     return (
@@ -28,10 +30,21 @@ export default function Dashboard() {
       </DashboardShell>
     );
   }
+
+  if (data.sites.length) {
+    return (
+      <DashboardShell>
+        <SiteTableHeader />
+        <SiteTable sites={data.sites} />
+      </DashboardShell>
+    );
+  }
+
   return (
     <DashboardShell>
-      <SiteTableHeader />
-      {data.sites.length ? <SiteTable sites={data.sites} /> : <EmptyState />}
+      <SiteTableHeader isPaidAccount={isPaidAccount} />
+
+      {isPaidAccount ? <EmptyState /> : <UpgradeEmptyState />}
     </DashboardShell>
   );
 }

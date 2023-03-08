@@ -13,9 +13,9 @@ export async function getStaticProps(context) {
   return {
     props: {
       initialFeedback: feedback,
-      // ISR, every 1 second
-      unstable_revalidate: 1,
     },
+    // ISR, every 1 second
+    revalidate: 1,
   };
 }
 
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
   });
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -43,6 +43,7 @@ const FeedbackPage = ({ initialFeedback }) => {
   const commentInputElement = useRef(null);
   const router = useRouter();
   const [allFeedback, setAllFeedback] = useState(initialFeedback);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -56,8 +57,11 @@ const FeedbackPage = ({ initialFeedback }) => {
       status: "pending",
     };
 
-    setAllFeedback([newFeedback, ...allFeedback]);
-    createFeedback(newFeedback);
+    const { id } = createFeedback(newFeedback);
+
+    setAllFeedback([{ id, ...newFeedback }, ...allFeedback]);
+
+    commentInputElement.current.value = "";
   };
 
   return (
@@ -67,6 +71,7 @@ const FeedbackPage = ({ initialFeedback }) => {
       width="full"
       maxWidth="700px"
       margin="0 auto"
+      px={4}
     >
       {auth.user && (
         <Box as="form" onSubmit={onSubmit}>
@@ -77,16 +82,22 @@ const FeedbackPage = ({ initialFeedback }) => {
               id="comment"
               placeholder="Leave a comment"
             />
-            <Button mt={4} type="submit" fontWeight="medium">
+            <Button
+              mt={4}
+              type="submit"
+              fontWeight="medium"
+              isDisabled={router.isFallback}
+            >
               Add Comment
             </Button>
           </FormControl>
         </Box>
       )}
 
-      {allFeedback.map((feedback) => {
-        return <Feedback key={feedback.id} {...feedback} />;
-      })}
+      {allFeedback &&
+        allFeedback.map((feedback) => (
+          <Feedback key={feedback.id} {...feedback} />
+        ))}
     </Box>
   );
 };

@@ -46,14 +46,28 @@ const AddSiteModal = ({ children }) => {
       isClosable: true,
     });
     onClose();
-    const { id } = createSite(newSite);
+
+    let _id;
     await mutate(
       ["/api/sites", user.token],
-      async (data) => ({ sites: [{ id, ...newSite }, ...data.sites] }),
+      async (data) => ({ sites: [{ _id, ...newSite }, ...data.sites] }),
       // If revalidate is true (default behavior), the site will try to revalidate
       // We don't need that, since browser needs to load from cache for now
       // revalidation can happen later
       { revalidate: false }
+    );
+
+    const { id } = await createSite(newSite);
+
+    // Revalidate id when db is done
+    // even if failure on db addition,
+    // revalidate fetches accurate site list
+
+    await mutate(
+      ["/api/sites", user.token],
+      async (data) => ({ sites: data.sites }),
+
+      { revalidate: true }
     );
   };
 
