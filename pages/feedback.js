@@ -7,6 +7,7 @@ import SiteTableSkeleton from "@/components/SiteTableSkeleton";
 import fetcher from "@/utils/fetcher";
 import FeedbackTable from "@/components/FeedbackTable";
 import FeedbackTableHeader from "@/components/FeedbackTableHeader";
+import FeedbackEmptyState from "@/components/FeedbackEmptyState";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ export default function MyFeedback() {
       {data.feedback.length ? (
         <FeedbackTable feedbackList={data.feedback} />
       ) : (
-        <EmptyState />
+        <FeedbackEmptyState />
       )}
     </DashboardShell>
   );

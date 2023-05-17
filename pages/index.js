@@ -42,10 +42,6 @@ export default function Home({ allFeedback }) {
     <Box>
       <Box bg="gray.100" py={16} px={4}>
         <Flex as="main" direction="column" align="center" justify="center">
-          <Head>
-            <title>Remark Radar</title>
-            <meta name="description" content="Comment, interact, engage!" />
-          </Head>
           <Logo boxSize={16} color="black" />
           <Heading my={4} size="lg">
             REMARK RADAR

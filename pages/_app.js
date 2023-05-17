@@ -2,6 +2,8 @@ import customTheme from "@/styles/theme";
 import { AuthProvider } from "@/lib/auth";
 import { ChakraProvider, CSSReset, ThemeProvider } from "@chakra-ui/react";
 import { Global, css } from "@emotion/react";
+import { DefaultSeo } from "next-seo";
+import SEO from "@/next-seo.config";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -36,6 +38,7 @@ export default function App({ Component, pageProps }) {
     <ChakraProvider theme={customTheme}>
       <GlobalStyle>
         <AuthProvider>
+          <DefaultSeo {...SEO} />
           <Component {...pageProps} />
         </AuthProvider>
       </GlobalStyle>
