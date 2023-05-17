@@ -1,6 +1,5 @@
 import React from "react";
 import { Heading, Flex, Text, Button } from "@chakra-ui/react";
-import DashboardShell from "@/components/DashboardShell";
 
 const FreePlanEmptyState = () => (
   <Flex
