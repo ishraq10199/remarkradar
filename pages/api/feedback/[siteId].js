@@ -1,8 +1,10 @@
-import { getAllFeedback } from "@/lib/db-admin";
+import { getAllFeedback, getSiteById } from "@/lib/db-admin";
 import { logger, prepObjectKeys } from "@/utils/logger";
 
 export default async function handler(req, res) {
   const { feedback, error } = await getAllFeedback(req.query.siteId);
+  const { site } = await getSiteById(req.query.siteId);
+
   if (error) {
     const headers = prepObjectKeys(req.headers);
     logger.error(
@@ -20,6 +22,6 @@ export default async function handler(req, res) {
     );
     res.status(500).json({ error: error });
   } else {
-    res.status(200).json({ feedback });
+    res.status(200).json({ feedback, site });
   }
 }

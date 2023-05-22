@@ -4,18 +4,27 @@ import {
   BreadcrumbLink,
   Heading,
   Flex,
+  Link,
 } from "@chakra-ui/react";
+import { NextLink } from "next/link";
 
-const FeedbackTableHeader = () => {
+const FeedbackTableHeader = ({ siteName }) => {
   return (
     <>
       <Breadcrumb>
         <BreadcrumbItem>
-          <BreadcrumbLink color="gray.700">Feedback</BreadcrumbLink>
+          <BreadcrumbLink href="/feedback" color="gray.700">
+            Feedback
+          </BreadcrumbLink>
         </BreadcrumbItem>
+        siteName?
+        <BreadcrumbItem>
+          <BreadcrumbLink color="gray.700">{siteName}</BreadcrumbLink>
+        </BreadcrumbItem>
+        : {""}
       </Breadcrumb>
       <Flex justifyContent="space-between">
-        <Heading mb={8}>My Feedback</Heading>
+        <Heading mb={8}>{siteName ? `${siteName}` : "All Feedback"}</Heading>
       </Flex>
     </>
   );

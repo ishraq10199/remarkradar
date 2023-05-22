@@ -13,6 +13,7 @@ const DashboardShell = ({ children }) => {
   const name = (path.charAt(1).toUpperCase() + path.slice(2)).split("/")[0];
   const title = `Remark Radar - ${name}`;
   const url = `https://remarkradar.com${path}`;
+
   return (
     <>
       <NextSeo

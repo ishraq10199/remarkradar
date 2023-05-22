@@ -58,7 +58,7 @@ export default function Home({ allFeedback }) {
                 transform: "scale(0.95)",
               }}
               as={Link}
-              href="/dashboard"
+              href="/sites"
             >
               Go to Dashboard
             </Button>

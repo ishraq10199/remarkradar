@@ -12,7 +12,7 @@ const FeedbackEmptyState = () => (
     direction="column"
   >
     <Heading size="lg" mb={2}>
-      You haven&apos;t left any feedback.
+      No feedback quite yet. 😢
     </Heading>
     <Text mb={4}>Spread the love!</Text>
   </Flex>

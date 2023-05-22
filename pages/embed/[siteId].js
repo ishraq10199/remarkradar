@@ -1,3 +1,4 @@
+import DashboardShell from "@/components/DashboardShell";
 import Feedback from "@/components/Feedback";
 import { useAuth } from "@/lib/auth";
 import { createFeedback } from "@/lib/db";
@@ -35,7 +36,7 @@ export async function getStaticPaths() {
   };
 }
 
-const FeedbackPage = ({ initialFeedback }) => {
+const EmbedFeedbackPage = ({ initialFeedback }) => {
   // initialFeedback.map((feedback) => {
   //   return <Feedback key={feedback.id} {...feedback} />;
   // });
@@ -43,6 +44,8 @@ const FeedbackPage = ({ initialFeedback }) => {
   const commentInputElement = useRef(null);
   const router = useRouter();
   const [allFeedback, setAllFeedback] = useState(initialFeedback);
+
+  console.log("------------", auth?.user?.provider);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -69,9 +72,9 @@ const FeedbackPage = ({ initialFeedback }) => {
       display="flex"
       flexDir="column"
       width="full"
-      maxWidth="700px"
-      margin="0 auto"
-      px={4}
+      // maxWidth="700px"
+      // margin="0 auto"
+      // px={4}
     >
       {auth.user && (
         <Box as="form" onSubmit={onSubmit}>
@@ -81,6 +84,7 @@ const FeedbackPage = ({ initialFeedback }) => {
               ref={commentInputElement}
               id="comment"
               placeholder="Leave a comment"
+              background={"white"}
             />
             <Button
               mt={4}
@@ -102,4 +106,4 @@ const FeedbackPage = ({ initialFeedback }) => {
   );
 };
 
-export default FeedbackPage;
+export default EmbedFeedbackPage;

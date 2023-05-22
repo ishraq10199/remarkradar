@@ -26,7 +26,21 @@ const SiteTable = ({ sites }) => {
         <tbody>
           {sites.map((site) => (
             <Box as="tr" key={site.url}>
-              <Td fontWeight="medium">{site.name}</Td>
+              <Td>
+                {site.id ? (
+                  <Link
+                    color={"blackAlpha.900"}
+                    fontWeight={"medium"}
+                    as={NextLink}
+                    href={`/site/${site.id}`}
+                    passHref={true}
+                  >
+                    {site.name}
+                  </Link>
+                ) : (
+                  <Skeleton height="10px" w={50 + "px"} my={4} />
+                )}
+              </Td>
               <Td maxWidth="250px">
                 <Text noOfLines={1} onClick={toggleURLOverflow}>
                   {site.url}
@@ -38,7 +52,7 @@ const SiteTable = ({ sites }) => {
                     color={"#9b00f9"}
                     fontWeight={"medium"}
                     as={NextLink}
-                    href={`/p/${site.id}`}
+                    href={`/feedback/${site.id}`}
                     passHref={true}
                   >
                     View Feedback
