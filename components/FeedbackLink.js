@@ -26,7 +26,7 @@ export default function FeedbackLink({
   const router = useRouter();
   return user ? (
     <Box as="form" onSubmit={onSubmit}>
-      <FormControl my={8}>
+      <FormControl mt={4}>
         <FormLabel htmlFor="comment">Comment</FormLabel>
 
         <Input
@@ -47,11 +47,12 @@ export default function FeedbackLink({
             Add Comment
           </Button>
           <Box>
-            <Link fontSize="xs" color="blackAlpha.500" href="/">
+            <Link fontSize="xs" color="blackAlpha.500" href="/" target="_blank">
               Powered by Remark Radar
             </Link>
           </Box>
         </Box>
+        <Divider orientation="horizontal" mt={4} />
       </FormControl>
     </Box>
   ) : (

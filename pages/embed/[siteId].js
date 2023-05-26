@@ -67,14 +67,7 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDir="column"
-      width="full"
-      // maxWidth="700px"
-      // margin="0 auto"
-      // px={4}
-    >
+    <Box display="flex" flexDir="column" width="full">
       <Script src="/scripts/iframeResizer.contentWindow.min.js" />
       <FeedbackLink
         siteId={router.query.siteId}

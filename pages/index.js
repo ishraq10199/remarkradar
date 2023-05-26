@@ -50,7 +50,7 @@ export default function Home() {
         </Flex>
       </Box>
 
-      <Box display="flex" width="full" maxWidth="700px" margin="2rem auto">
+      <Box display="flex" maxWidth="min(90%, 700px)" margin="2rem auto">
         <IframeResizer
           src="/embed/m7leeul0Ei70rkYS1VMV"
           style={{ width: "1px", minWidth: "100%" }}
