@@ -15,7 +15,6 @@ const FeedbackTable = ({ feedbackList }) => {
       </thead>
       <tbody>
         {feedbackList.map((feedback) => {
-          console.log(feedback.id);
           return <FeedbackRow {...feedback} key={feedback.id} />;
         })}
       </tbody>

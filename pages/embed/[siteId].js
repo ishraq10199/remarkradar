@@ -1,15 +1,16 @@
-import DashboardShell from "@/components/DashboardShell";
 import Feedback from "@/components/Feedback";
+import FeedbackLink from "@/components/FeedbackLink";
 import { useAuth } from "@/lib/auth";
 import { createFeedback } from "@/lib/db";
-import { getAllFeedback, getAllSites } from "@/lib/db-admin";
-import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { getAllActiveFeedback, getAllSites } from "@/lib/db-admin";
+import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { useRef, useState } from "react";
 
 export async function getStaticProps(context) {
   const siteId = context.params.siteId;
-  const { feedback } = await getAllFeedback(siteId);
+  const { feedback } = await getAllActiveFeedback(siteId);
 
   return {
     props: {
@@ -45,8 +46,6 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
   const router = useRouter();
   const [allFeedback, setAllFeedback] = useState(initialFeedback);
 
-  console.log("------------", auth?.user?.provider);
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -57,7 +56,7 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
       text: commentInputElement.current.value,
       createdAt: new Date().toISOString(),
       provider: auth.user.provider,
-      status: "pending",
+      status: "active",
     };
 
     const { id } = createFeedback(newFeedback);
@@ -76,27 +75,15 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
       // margin="0 auto"
       // px={4}
     >
-      {auth.user && (
-        <Box as="form" onSubmit={onSubmit}>
-          <FormControl my={8}>
-            <FormLabel htmlFor="comment">Comment</FormLabel>
-            <Input
-              ref={commentInputElement}
-              id="comment"
-              placeholder="Leave a comment"
-              background={"white"}
-            />
-            <Button
-              mt={4}
-              type="submit"
-              fontWeight="medium"
-              isDisabled={router.isFallback}
-            >
-              Add Comment
-            </Button>
-          </FormControl>
-        </Box>
-      )}
+      <Script src="/scripts/iframeResizer.contentWindow.min.js" />
+      <FeedbackLink
+        siteId={router.query.siteId}
+        user={auth.user}
+        hideLogin={false}
+        onSubmit={onSubmit}
+        commentInputElement={commentInputElement}
+        isFallback={router.isFallback}
+      />
 
       {allFeedback &&
         allFeedback.map((feedback) => (

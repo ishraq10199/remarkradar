@@ -1,16 +1,46 @@
 import React from "react";
-import { Box, Flex, Link, Skeleton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Link,
+  Skeleton,
+  Text,
+  IconButton,
+  useToast,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Table, Tr, Th, Td } from "./Table";
 import { parseISO, format } from "date-fns";
+import { CopyIcon } from "@chakra-ui/icons";
 
 const SiteTable = ({ sites }) => {
   let classNameForLineNums;
+  const toast = useToast();
   const toggleURLOverflow = (e) => {
     if (!classNameForLineNums) classNameForLineNums = e.target.classList[1];
     e.target.classList.toggle(classNameForLineNums);
     e.target.classList.toggle("css-0");
   };
+
+  const onCopyIconClick = (e) => {
+    const embedLink =
+      window.location.hostname +
+      ":" +
+      window.location.port +
+      "/embed/" +
+      e.target.id;
+    console.log(embedLink);
+    navigator.clipboard.writeText(embedLink);
+    toast({
+      title: "Embed Link copied to clipboard!",
+      description: "Use as an iframe source anywhere on your site",
+      status: "info",
+      colorScheme: "purple",
+      duration: 2000,
+      isClosable: false,
+    });
+  };
+
   return (
     <Flex>
       <Table display="block" overflowX={"auto"}>
@@ -20,7 +50,7 @@ const SiteTable = ({ sites }) => {
             <Th>Site Link</Th>
             <Th>Feedback Link</Th>
             <Th>Date Added</Th>
-            <Th>{""}</Th>
+            <Th>Embed</Th>
           </Tr>
         </thead>
         <tbody>
@@ -62,6 +92,16 @@ const SiteTable = ({ sites }) => {
                 )}
               </Td>
               <Td minW="150px">{format(parseISO(site.createdAt), "PPpp")}</Td>
+              <Td textAlign={"center"}>
+                <IconButton
+                  aria-label="Copy embed link"
+                  icon={<CopyIcon pointerEvents={"none"} />}
+                  background={"transparent"}
+                  pointerEvents={"all"}
+                  onClick={onCopyIconClick}
+                  id={site.id}
+                />
+              </Td>
             </Box>
           ))}
         </tbody>

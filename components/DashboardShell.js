@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import { useAuth } from "@/lib/auth";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const DashboardShell = ({ children }) => {
   const { user, signout } = useAuth();
@@ -34,8 +35,10 @@ const DashboardShell = ({ children }) => {
           borderTop="5px solid #9b00f9"
         >
           <Stack spacing={4} flexDirection="row" alignItems="center" isInline>
-            <Logo boxSize={10} color="black" />
-            <Link as={NextLink} href={"/dashboard"} passHref={true}>
+            <Link as={NextLink} href={"/"} passHref={true}>
+              <Logo boxSize={10} color="black" />
+            </Link>
+            <Link as={NextLink} href={"/sites"} passHref={true}>
               Sites
             </Link>
             <Link as={NextLink} href={"/feedback"} passHref={true}>

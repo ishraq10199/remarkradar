@@ -90,6 +90,7 @@ const FeedbackPage = ({ initialFeedback }) => {
                 type="submit"
                 fontWeight="medium"
                 isDisabled={router.isFallback}
+                background={"gray.200"}
               >
                 Add Comment
               </Button>
