@@ -1,5 +1,12 @@
 import React from "react";
-import { Flex, Stack, Link, Avatar, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Stack,
+  Link,
+  Avatar,
+  Button,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import Logo from "./Logo";
 import { useAuth } from "@/lib/auth";
@@ -13,6 +20,7 @@ const DashboardShell = ({ children }) => {
   const path = router.pathname;
   const name = (path.charAt(1).toUpperCase() + path.slice(2)).split("/")[0];
   const title = `Remark Radar - ${name}`;
+  const [isBigScreen] = useMediaQuery("(min-width: 418px)");
   const url = `https://remarkradar.com${path}`;
 
   return (
@@ -44,6 +52,9 @@ const DashboardShell = ({ children }) => {
             <Link as={NextLink} href={"/feedback"} passHref={true}>
               Feedback
             </Link>
+            <Link as={NextLink} href={"/pricing"} passHref={true}>
+              Pricing
+            </Link>
           </Stack>
           <Flex alignItems="center">
             {/* <Link mr={4}>Account</Link> */}
@@ -72,7 +83,7 @@ const DashboardShell = ({ children }) => {
           alignItems="stretch"
           maxWidth="100%"
           p={8}
-          height="100vh"
+          height={isBigScreen ? "100vh" : "100%"}
         >
           <Flex maxWidth="800px" w="100%" ml="auto" mr="auto">
             <Flex flexDirection="column" maxWidth="800px" w="100%">
