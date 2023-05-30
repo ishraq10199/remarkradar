@@ -55,6 +55,8 @@ const PricingChoices = ({ currentPlan }) => {
               variant="solid"
               size="lg"
               width="100%"
+              bgColor={currentPlan.includes("free") ? "gray.200" : "#9b00f9"}
+              textColor={currentPlan.includes("free") ? "black" : "white"}
               disabled={true}
               pointerEvents={"none"}
             >
@@ -101,6 +103,8 @@ const PricingChoices = ({ currentPlan }) => {
               variant="solid"
               size="lg"
               width="100%"
+              bgColor={currentPlan.includes("starter") ? "gray.200" : "#9b00f9"}
+              textColor={currentPlan.includes("starter") ? "black" : "white"}
               disabled={["starter", "premium"].includes(currentPlan)}
               pointerEvents={
                 ["starter", "premium"].includes(currentPlan) ? "none" : "all"
@@ -151,6 +155,8 @@ const PricingChoices = ({ currentPlan }) => {
             </Heading>
             <Button
               variant="solid"
+              bgColor={currentPlan.includes("premium") ? "gray.200" : "#9b00f9"}
+              textColor={currentPlan.includes("premium") ? "black" : "white"}
               size="lg"
               width="100%"
               disabled={currentPlan.includes("premium")}

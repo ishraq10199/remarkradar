@@ -5,7 +5,6 @@ import { Flex } from "@chakra-ui/react";
 
 export default function PricingPage() {
   const { user } = useAuth();
-  // TODO: check user's role => set button to unclickable, selected plan
 
   return (
     <DashboardShell>
