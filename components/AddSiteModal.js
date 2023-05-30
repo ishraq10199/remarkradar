@@ -14,13 +14,14 @@ import {
   Input,
   useDisclosure,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 
 import { createSite } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
 import fetcher from "@/utils/fetcher";
 
-const AddSiteModal = ({ children }) => {
+const AddSiteModal = ({ accountPlan, siteCount, children }) => {
   const auth = useAuth();
   const { data } = useSWR(
     auth.user ? ["/api/sites", auth.user.token] : null,
@@ -71,6 +72,14 @@ const AddSiteModal = ({ children }) => {
     );
   };
 
+  // TODO: use the user's site count to choose what to render
+  // const siteLimitReached = accountPlan.includes("free")
+  //   ? +siteCount >= 3
+  //   : accountPlan.includes("starter")
+  //   ? +siteCount >= 20
+  //   : false;
+  const siteLimitReached = true;
+
   return (
     <>
       <Button
@@ -88,45 +97,81 @@ const AddSiteModal = ({ children }) => {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
-          <ModalHeader fontWeight="bold">Add Site</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input
-                placeholder="My site"
-                {...register("name", {
-                  required: "Required",
-                })}
-              />
-            </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Link</FormLabel>
-              <Input
-                placeholder="https://website.com"
-                {...register("url", {
-                  required: "Required",
-                })}
-              />
-            </FormControl>
-          </ModalBody>
+        {siteLimitReached ? (
+          <ModalContent as="form" method="GET" action="/pricing/">
+            <ModalHeader fontWeight="bold">Account limit reached</ModalHeader>
+            <ModalCloseButton />
 
-          <ModalFooter>
-            <Button onClick={onClose} mr={3} fontWeight="medium">
-              Cancel
-            </Button>
-            <Button
-              backgroundColor="#99FFFE"
-              color="#194D4C"
-              fontWeight="medium"
-              type="submit"
-            >
-              Create
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+            <ModalBody pb={2}>
+              You have reached the site amount for your{" "}
+              <Text fontWeight={700} as="span">
+                {("" + accountPlan)[0].toUpperCase() + accountPlan.substring(1)}
+              </Text>{" "}
+              account. Delete any site you&apos;ve added, or consider upgrading.
+            </ModalBody>
+
+            <ModalFooter>
+              <Button onClick={onClose} mr={3} fontWeight="medium">
+                Cancel
+              </Button>
+              <Button
+                backgroundColor="#9b00f9"
+                color="white"
+                fontWeight="medium"
+                type="submit"
+                _hover={{ bg: "#b236ff" }}
+                _active={{
+                  bg: "#9b00f9",
+                  transform: "scale(0.95)",
+                }}
+              >
+                Upgrade
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        ) : (
+          <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
+            <ModalHeader fontWeight="bold">Add Site</ModalHeader>
+            <ModalCloseButton />
+
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  placeholder="My site"
+                  {...register("name", {
+                    required: "Required",
+                  })}
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Link</FormLabel>
+                <Input
+                  placeholder="https://website.com"
+                  {...register("url", {
+                    required: "Required",
+                  })}
+                />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button onClick={onClose} mr={3} fontWeight="medium">
+                Cancel
+              </Button>
+              <Button
+                backgroundColor="#99FFFE"
+                color="#194D4C"
+                fontWeight="medium"
+                type="submit"
+              >
+                Create
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        )}
       </Modal>
     </>
   );

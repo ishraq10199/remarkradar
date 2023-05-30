@@ -7,7 +7,6 @@ import {
   Button,
   Flex,
   Heading,
-  Stack,
   Stat,
   StatGroup,
   StatHelpText,
@@ -15,7 +14,6 @@ import {
   StatNumber,
   Text,
 } from "@chakra-ui/react";
-import { createCheckoutSession } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
 import { goToBillingPortal } from "@/lib/stripe";
 import { useState } from "react";

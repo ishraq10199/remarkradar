@@ -20,7 +20,7 @@ const DashboardShell = ({ children }) => {
   const path = router.pathname;
   const name = (path.charAt(1).toUpperCase() + path.slice(2)).split("/")[0];
   const title = `Remark Radar - ${name}`;
-  const [isBigScreen] = useMediaQuery("(min-width: 418px)");
+  const [isBigScreen] = useMediaQuery("(min-width: 768px)");
   const url = `https://remarkradar.com${path}`;
 
   return (

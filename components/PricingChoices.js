@@ -7,10 +7,20 @@ import {
   Text,
   useMediaQuery,
 } from "@chakra-ui/react";
+import {
+  createStarterPlanCheckoutSession,
+  createPremiumPlanCheckoutSession,
+} from "@/lib/db";
+import { useState } from "react";
+import { useAuth } from "@/lib/auth";
 
 const PricingChoices = ({ currentPlan }) => {
-  const [isBigScreen] = useMediaQuery("(min-width: 418px)");
+  const { user } = useAuth();
+  const [isBigScreen] = useMediaQuery("(min-width: 768px)");
+  const [isStarterCheckoutLoading, setStarterCheckoutLoading] = useState(false);
+  const [isPremiumCheckoutLoading, setPremiumCheckoutLoading] = useState(false);
 
+  // TODO [refactor]: change "currentPlan.includes" checks into something more readable, maybe a boolean
   return (
     currentPlan && (
       <Flex
@@ -55,8 +65,7 @@ const PricingChoices = ({ currentPlan }) => {
               variant="solid"
               size="lg"
               width="100%"
-              bgColor={currentPlan.includes("free") ? "gray.200" : "#9b00f9"}
-              textColor={currentPlan.includes("free") ? "black" : "white"}
+              colorScheme="gray"
               disabled={true}
               pointerEvents={"none"}
             >
@@ -90,7 +99,7 @@ const PricingChoices = ({ currentPlan }) => {
           >
             <Box>
               <Heading as="h3" size="md" textAlign="center">
-                Free
+                Starter
               </Heading>
             </Box>
             <Text textAlign="center" width="200px">
@@ -100,11 +109,30 @@ const PricingChoices = ({ currentPlan }) => {
               $ 5/month
             </Heading>
             <Button
+              onClick={() => {
+                setStarterCheckoutLoading(true);
+                createStarterPlanCheckoutSession(user.uid);
+              }}
+              isLoading={isStarterCheckoutLoading}
               variant="solid"
               size="lg"
+              //
+              backgroundColor={
+                ["starter", "premium"].includes(currentPlan)
+                  ? "gray.100"
+                  : "gray.900"
+              }
+              color={
+                ["starter", "premium"].includes(currentPlan) ? "black" : "white"
+              }
+              fontWeight="medium"
+              _hover={{ bg: "gray.700" }}
+              _active={{
+                bg: "gray.800",
+                transform: "scale(0.95)",
+              }}
+              //
               width="100%"
-              bgColor={currentPlan.includes("starter") ? "gray.200" : "#9b00f9"}
-              textColor={currentPlan.includes("starter") ? "black" : "white"}
               disabled={["starter", "premium"].includes(currentPlan)}
               pointerEvents={
                 ["starter", "premium"].includes(currentPlan) ? "none" : "all"
@@ -154,10 +182,26 @@ const PricingChoices = ({ currentPlan }) => {
               $ 10/month
             </Heading>
             <Button
+              onClick={() => {
+                setPremiumCheckoutLoading(true);
+                createPremiumPlanCheckoutSession(user.uid);
+              }}
+              isLoading={isPremiumCheckoutLoading}
               variant="solid"
-              bgColor={currentPlan.includes("premium") ? "gray.200" : "#9b00f9"}
-              textColor={currentPlan.includes("premium") ? "black" : "white"}
               size="lg"
+              // colorScheme={currentPlan.includes("premium") ? "gray" : "purple"}
+              //
+              backgroundColor={
+                currentPlan.includes("premium") ? "gray.100" : "gray.900"
+              }
+              color={currentPlan.includes("premium") ? "black" : "white"}
+              fontWeight="medium"
+              _hover={{ bg: "gray.700" }}
+              _active={{
+                bg: "gray.800",
+                transform: "scale(0.95)",
+              }}
+              //
               width="100%"
               disabled={currentPlan.includes("premium")}
               pointerEvents={currentPlan.includes("premium") ? "none" : "all"}

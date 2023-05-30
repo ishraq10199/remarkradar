@@ -11,7 +11,7 @@ import {
 import NextLink from "next/link";
 import { Table, Tr, Th, Td } from "./Table";
 import { parseISO, format } from "date-fns";
-import { CopyIcon } from "@chakra-ui/icons";
+import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const SiteTable = ({ sites }) => {
   let classNameForLineNums;
@@ -29,7 +29,6 @@ const SiteTable = ({ sites }) => {
       window.location.port +
       "/embed/" +
       e.target.id;
-    console.log(embedLink);
     navigator.clipboard.writeText(embedLink);
     toast({
       title: "Embed Link copied to clipboard!",
@@ -41,6 +40,10 @@ const SiteTable = ({ sites }) => {
     });
   };
 
+  const onDeleteIconClick = (e) => {
+    // TODO: Delete site by `e.target.id`
+  };
+
   return (
     <Flex>
       <Table display="block" overflowX={"auto"}>
@@ -48,15 +51,16 @@ const SiteTable = ({ sites }) => {
           <Tr>
             <Th>Name</Th>
             <Th>Site Link</Th>
-            <Th>Feedback Link</Th>
+            <Th>Feedback</Th>
             <Th>Date Added</Th>
             <Th>Embed</Th>
+            <Th>Delete</Th>
           </Tr>
         </thead>
         <tbody>
           {sites.map((site) => (
             <Box as="tr" key={site.url}>
-              <Td>
+              <Td maxWidth="150px">
                 {site.id ? (
                   <Link
                     color={"blackAlpha.900"}
@@ -71,7 +75,7 @@ const SiteTable = ({ sites }) => {
                   <Skeleton height="10px" w={50 + "px"} my={4} />
                 )}
               </Td>
-              <Td maxWidth="250px">
+              <Td maxWidth="200px">
                 <Text noOfLines={1} onClick={toggleURLOverflow}>
                   {site.url}
                 </Text>
@@ -85,7 +89,7 @@ const SiteTable = ({ sites }) => {
                     href={`/feedback/${site.id}`}
                     passHref={true}
                   >
-                    View Feedback
+                    View all
                   </Link>
                 ) : (
                   <Skeleton height="10px" w={50 + "px"} my={4} />
@@ -99,6 +103,16 @@ const SiteTable = ({ sites }) => {
                   background={"transparent"}
                   pointerEvents={"all"}
                   onClick={onCopyIconClick}
+                  id={site.id}
+                />
+              </Td>
+              <Td textAlign={"center"}>
+                <IconButton
+                  aria-label="Delete site"
+                  icon={<DeleteIcon pointerEvents={"none"} color="red.600" />}
+                  background={"transparent"}
+                  pointerEvents={"all"}
+                  onClick={onDeleteIconClick}
                   id={site.id}
                 />
               </Td>
