@@ -29,8 +29,8 @@ const FeedbackUsage = ({ stripeRole, feedbackCount }) => (
   <StatGroup>
     <Stat>
       <StatLabel color="gray.700">Feedback</StatLabel>
-      <StatNumber fontWeight="medium">{feedbackCount}</StatNumber>
-      <StatHelpText>No limits</StatHelpText>
+      <StatNumber fontWeight="medium">{feedbackCount}/∞</StatNumber>
+      <StatHelpText>Unlimited feedback</StatHelpText>
     </Stat>
 
     <Stat>

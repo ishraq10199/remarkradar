@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Flex,
@@ -11,8 +10,7 @@ import {
 import NextLink from "next/link";
 import { Table, Tr, Th, Td } from "./Table";
 import { parseISO, format } from "date-fns";
-import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
-import { deleteSite } from "@/lib/db";
+import { CopyIcon } from "@chakra-ui/icons";
 import DeleteSiteButton from "./DeleteSiteButton";
 
 const SiteTable = ({ sites }) => {

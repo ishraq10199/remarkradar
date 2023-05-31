@@ -45,6 +45,11 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
   const commentInputElement = useRef(null);
   const router = useRouter();
   const [allFeedback, setAllFeedback] = useState(initialFeedback);
+  const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+
+  const hideInput = searchParams.has("hideInput")
+    ? "" + searchParams.get("hideInput") === "true"
+    : false;
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -69,14 +74,16 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
   return (
     <Box display="flex" flexDir="column" width="full">
       <Script src="/scripts/iframeResizer.contentWindow.min.js" />
-      <FeedbackLink
-        siteId={router.query.siteId}
-        user={auth.user}
-        hideLogin={false}
-        onSubmit={onSubmit}
-        commentInputElement={commentInputElement}
-        isFallback={router.isFallback}
-      />
+      {!hideInput && (
+        <FeedbackLink
+          siteId={router.query.siteId}
+          user={auth.user}
+          hideLogin={false}
+          onSubmit={onSubmit}
+          commentInputElement={commentInputElement}
+          isFallback={router.isFallback}
+        />
+      )}
       {allFeedback &&
         allFeedback.map((feedback) => (
           <Feedback key={feedback.id} {...feedback} />
