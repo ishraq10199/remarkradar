@@ -8,6 +8,8 @@ import fetcher from "@/utils/fetcher";
 import FeedbackTable from "@/components/FeedbackTable";
 import FeedbackTableHeader from "@/components/FeedbackTableHeader";
 import FeedbackEmptyState from "@/components/FeedbackEmptyState";
+import { useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,11 +18,27 @@ const inter = Inter({
 
 export default function MyFeedback() {
   const { user } = useAuth();
+  const toast = useToast();
+  const [infoToastShown, setInfoTextShown] = useState(false);
 
   const { data } = useSWR(
     user ? ["/api/feedback", user.token] : null,
     ([url, token]) => fetcher(url, token)
   );
+
+  useEffect(() => {
+    if (!infoToastShown && data?.feedback?.length) {
+      setInfoTextShown(true);
+      toast({
+        title: "Hint",
+        description:
+          "If you can't read some of the comments, try clicking on the comment text to expand. Click again to truncate!",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [infoToastShown, toast, data]);
 
   if (!data) {
     return (
@@ -30,6 +48,7 @@ export default function MyFeedback() {
       </DashboardShell>
     );
   }
+
   return (
     <DashboardShell>
       <FeedbackTableHeader />

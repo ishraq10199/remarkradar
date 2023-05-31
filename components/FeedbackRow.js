@@ -1,4 +1,4 @@
-import { Box, Code, Switch } from "@chakra-ui/react";
+import { Box, Code, Switch, useToast } from "@chakra-ui/react";
 import { Td } from "./Table";
 import DeleteFeedbackButton from "@/components/DeleteFeedbackButton";
 import { useEffect, useState } from "react";
@@ -7,10 +7,19 @@ import { mutate } from "swr";
 import { useAuth } from "@/lib/auth";
 
 const FeedbackRow = ({ id, author, text, route, status }) => {
+  let classNameForLineNums;
   const auth = useAuth();
   const [checked, setChecked] = useState(status === "active");
   const toggleFeedback = async (e) => {
     setChecked(!checked);
+  };
+
+  const toggleTextOverflow = (e) => {
+    console.log(e.target.classList);
+    if (!classNameForLineNums) classNameForLineNums = e.target.classList[0];
+    console.log(e);
+    e.target.classList.toggle(classNameForLineNums);
+    e.target.classList.toggle("css-1kwnuqq");
   };
 
   useEffect(() => {
@@ -24,18 +33,20 @@ const FeedbackRow = ({ id, author, text, route, status }) => {
   return (
     <Box as="tr">
       <Td fontWeight="medium">{author}</Td>
-      <Td>{text}</Td>
+      <Td noOfLines={3} onClick={toggleTextOverflow}>
+        {text}
+      </Td>
       <Td>
         <Code>{route || "/"}</Code>
       </Td>
-      <Td>
+      <Td textAlign={"center"}>
         <Switch
           colorScheme="green"
           onChange={toggleFeedback}
           defaultChecked={checked}
         />
       </Td>
-      <Td>
+      <Td textAlign={"center"}>
         <DeleteFeedbackButton feedbackId={id} />
       </Td>
     </Box>

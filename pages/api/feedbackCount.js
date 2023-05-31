@@ -1,13 +1,15 @@
-import { getUserFeedback } from "@/lib/db-admin";
+import { getUserFeedbackCount } from "@/lib/db-admin";
 import { auth } from "@/lib/firebase-admin";
 import { logger, prepObjectKeys } from "@/utils/logger";
 
 export default async function handler(req, res) {
   try {
     const user = await auth.verifyIdToken(req.headers.token);
-    const { feedback, error } = await getUserFeedback(user.uid);
+    const { count, error } = await getUserFeedbackCount(user.uid);
+    console.log("api request to /api/feedback-count");
+    console.log(count);
 
-    res.status(200).json({ feedback });
+    res.status(200).json({ count });
   } catch (error) {
     const headers = prepObjectKeys(req.headers);
     logger.error(

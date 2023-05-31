@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Heading, Flex, Text, Button } from "@chakra-ui/react";
-import AddSiteModal from "@/components/AddSiteModal";
+import { createStarterPlanCheckoutSession } from "@/lib/db";
+import { useAuth } from "@/lib/auth";
 
 const UpgradeEmptyState = () => {
   const [isCheckoutLoading, setCheckoutLoading] = useState(false);
+  const { user } = useAuth();
   return (
     <Flex
       width="100%"
@@ -22,11 +24,11 @@ const UpgradeEmptyState = () => {
         </Text>
         &apos;s starter plan.
       </Heading>
-      <Text mb={4}>Start today for $10, grow with us later 🌱</Text>
+      <Text mb={4}>Start today for $5, grow with us later 🌱</Text>
       <Button
         onClick={() => {
           setCheckoutLoading(true);
-          createCheckoutSession(user.uid);
+          createStarterPlanCheckoutSession(user.uid);
         }}
         backgroundColor="gray.900"
         color="white"

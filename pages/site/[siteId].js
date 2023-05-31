@@ -1,107 +1,53 @@
 import DashboardShell from "@/components/DashboardShell";
-import Feedback from "@/components/Feedback";
 import { useAuth } from "@/lib/auth";
-import { createFeedback } from "@/lib/db";
-import { getAllFeedback, getAllSites } from "@/lib/db-admin";
-import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import fetcher from "@/utils/fetcher";
+import { Box, Divider, Heading } from "@chakra-ui/react";
+import IframeResizer from "iframe-resizer-react";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import useSWR from "swr";
 
-export async function getStaticProps(context) {
-  const siteId = context.params.siteId;
-  const { feedback } = await getAllFeedback(siteId);
-
-  return {
-    props: {
-      initialFeedback: feedback,
-    },
-    // ISR, every 1 second
-    revalidate: 1,
-  };
-}
-
-export async function getStaticPaths() {
-  const { sites } = await getAllSites();
-
-  const paths = sites.map((site) => {
-    return {
-      params: {
-        siteId: site.id.toString(),
-      },
-    };
-  });
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-const FeedbackPage = ({ initialFeedback }) => {
-  // initialFeedback.map((feedback) => {
-  //   return <Feedback key={feedback.id} {...feedback} />;
-  // });
-  const auth = useAuth();
-  const commentInputElement = useRef(null);
+const FeedbackPage = () => {
+  const { user } = useAuth();
   const router = useRouter();
-  const [allFeedback, setAllFeedback] = useState(initialFeedback);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const newFeedback = {
-      author: auth.user.name,
-      authorId: auth.user.uid,
-      siteId: router.query.siteId,
-      text: commentInputElement.current.value,
-      createdAt: new Date().toISOString(),
-      provider: auth.user.provider,
-      status: "pending",
-    };
-
-    const { id } = createFeedback(newFeedback);
-
-    setAllFeedback([{ id, ...newFeedback }, ...allFeedback]);
-
-    commentInputElement.current.value = "";
-  };
+  const { data } = useSWR(
+    user ? [`/api/site/${router.query.siteId}`, user.token] : null,
+    ([url, token]) => fetcher(url, token)
+  );
 
   return (
     <DashboardShell>
+      {/* 
+      TODO: 
+        1. Statistics about the site
+        2. Show recent feedback
+        3. Show option to delete
+        4. Delete confirmation modal
+      */}
       <Box
-        display="flex"
-        flexDir="column"
-        width="full"
-        // maxWidth="700px"
-        // margin="0 auto"
-        // px={4}
+        bg="white"
+        p={4}
+        borderRadius={8}
+        boxShadow={"-2px 2px 10px rgba(0, 0, 0, 0.1)"}
       >
-        {auth.user && (
-          <Box as="form" onSubmit={onSubmit}>
-            <FormControl my={8}>
-              <FormLabel htmlFor="comment">Comment</FormLabel>
-              <Input
-                ref={commentInputElement}
-                id="comment"
-                placeholder="Leave a comment"
-                background={"white"}
-              />
-              <Button
-                mt={4}
-                type="submit"
-                fontWeight="medium"
-                isDisabled={router.isFallback}
-                background={"gray.200"}
-              >
-                Add Comment
-              </Button>
-            </FormControl>
-          </Box>
-        )}
+        <Box
+          display="flex"
+          width="100%"
+          margin="2rem auto"
+          p={2}
+          pb={0}
+          flexDir={"column"}
+        >
+          <Heading size={"lg"}>
+            {`Comments from "${data?.site.name || "..."}"`}
 
-        {allFeedback &&
-          allFeedback.map((feedback) => (
-            <Feedback key={feedback.id} {...feedback} />
-          ))}
+            <Divider my={4} />
+          </Heading>
+          <IframeResizer
+            src="/embed/m7leeul0Ei70rkYS1VMV?hideInput=true"
+            style={{ minWidth: "100%" }}
+            heightCalculationMethod="grow"
+          />
+        </Box>
       </Box>
     </DashboardShell>
   );

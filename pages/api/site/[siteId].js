@@ -1,14 +1,9 @@
-import { getUserFeedback } from "@/lib/db-admin";
-import { auth } from "@/lib/firebase-admin";
+import { getSiteById } from "@/lib/db-admin";
 import { logger, prepObjectKeys } from "@/utils/logger";
 
 export default async function handler(req, res) {
-  try {
-    const user = await auth.verifyIdToken(req.headers.token);
-    const { feedback, error } = await getUserFeedback(user.uid);
-
-    res.status(200).json({ feedback });
-  } catch (error) {
+  const { site, error } = await getSiteById(req.query.siteId);
+  if (error) {
     const headers = prepObjectKeys(req.headers);
     logger.error(
       {
@@ -24,5 +19,7 @@ export default async function handler(req, res) {
       error.message
     );
     res.status(500).json({ error: error });
+  } else {
+    res.status(200).json({ site });
   }
 }

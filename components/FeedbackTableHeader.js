@@ -4,9 +4,7 @@ import {
   BreadcrumbLink,
   Heading,
   Flex,
-  Link,
 } from "@chakra-ui/react";
-import { NextLink } from "next/link";
 
 const FeedbackTableHeader = ({ siteName }) => {
   return (

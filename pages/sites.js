@@ -20,12 +20,12 @@ export default function Dashboard() {
     user ? ["/api/sites", user.token] : null,
     ([url, token]) => fetcher(url, token)
   );
-  const isPaidAccount = user ? user.stripeRole !== "free" : false;
+  const userAccountPlan = user ? user.stripeRole : "free";
 
   if (!data) {
     return (
       <DashboardShell>
-        <SiteTableHeader isPaidAccount={isPaidAccount} />
+        <SiteTableHeader accountPlan={userAccountPlan} siteCount={0} />
         <SiteTableSkeleton />
       </DashboardShell>
     );
@@ -34,7 +34,10 @@ export default function Dashboard() {
   if (data.sites.length) {
     return (
       <DashboardShell>
-        <SiteTableHeader isPaidAccount={isPaidAccount} />
+        <SiteTableHeader
+          accountPlan={userAccountPlan}
+          siteCount={data.sites.length}
+        />
         <SiteTable sites={data.sites} />
       </DashboardShell>
     );
@@ -42,8 +45,8 @@ export default function Dashboard() {
 
   return (
     <DashboardShell>
-      <SiteTableHeader isPaidAccount={isPaidAccount} />
-      {isPaidAccount ? <EmptyState /> : <UpgradeEmptyState />}
+      <SiteTableHeader accountPlan={userAccountPlan} siteCount={0} />
+      <EmptyState />
     </DashboardShell>
   );
 }

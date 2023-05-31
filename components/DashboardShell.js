@@ -1,11 +1,16 @@
-import React from "react";
-import { Flex, Stack, Link, Avatar, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Stack,
+  Link,
+  Avatar,
+  Button,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import Logo from "./Logo";
 import { useAuth } from "@/lib/auth";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const DashboardShell = ({ children }) => {
   const { user, signout } = useAuth();
@@ -13,6 +18,7 @@ const DashboardShell = ({ children }) => {
   const path = router.pathname;
   const name = (path.charAt(1).toUpperCase() + path.slice(2)).split("/")[0];
   const title = `Remark Radar - ${name}`;
+  const [isBigScreen] = useMediaQuery("(min-width: 768px)");
   const url = `https://remarkradar.com${path}`;
 
   return (
@@ -44,6 +50,9 @@ const DashboardShell = ({ children }) => {
             <Link as={NextLink} href={"/feedback"} passHref={true}>
               Feedback
             </Link>
+            <Link as={NextLink} href={"/pricing"} passHref={true}>
+              Pricing
+            </Link>
           </Stack>
           <Flex alignItems="center">
             {/* <Link mr={4}>Account</Link> */}
@@ -72,9 +81,8 @@ const DashboardShell = ({ children }) => {
           alignItems="stretch"
           maxWidth="100%"
           p={8}
-          height="100vh"
         >
-          <Flex maxWidth="800px" w="100%" ml="auto" mr="auto">
+          <Flex maxWidth="800px" w="100%" ml="auto" mr="auto" minH={"100vh"}>
             <Flex flexDirection="column" maxWidth="800px" w="100%">
               {children}
             </Flex>
