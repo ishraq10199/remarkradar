@@ -98,7 +98,13 @@ const AddSiteModal = ({ accountPlan, siteCount, children }) => {
         <ModalOverlay />
 
         {siteLimitReached ? (
-          <ModalContent as="form" method="GET" action="/pricing/">
+          <ModalContent
+            as="form"
+            method="GET"
+            action="/pricing/"
+            m={8}
+            my={"auto"}
+          >
             <ModalHeader fontWeight="bold">Account limit reached</ModalHeader>
             <ModalCloseButton />
 
@@ -130,7 +136,12 @@ const AddSiteModal = ({ accountPlan, siteCount, children }) => {
             </ModalFooter>
           </ModalContent>
         ) : (
-          <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
+          <ModalContent
+            as="form"
+            onSubmit={handleSubmit(onCreateSite)}
+            m={8}
+            my={"auto"}
+          >
             <ModalHeader fontWeight="bold">Add Site</ModalHeader>
             <ModalCloseButton />
 

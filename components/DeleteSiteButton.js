@@ -50,7 +50,7 @@ const DeleteSiteButton = ({ siteId }) => {
         onClose={onClose}
       >
         <AlertDialogOverlay />
-        <AlertDialogContent>
+        <AlertDialogContent m={8} my={"auto"}>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             Delete Site
           </AlertDialogHeader>
