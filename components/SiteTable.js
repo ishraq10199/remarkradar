@@ -12,6 +12,8 @@ import NextLink from "next/link";
 import { Table, Tr, Th, Td } from "./Table";
 import { parseISO, format } from "date-fns";
 import { CopyIcon, DeleteIcon } from "@chakra-ui/icons";
+import { deleteSite } from "@/lib/db";
+import DeleteSiteButton from "./DeleteSiteButton";
 
 const SiteTable = ({ sites }) => {
   let classNameForLineNums;
@@ -38,10 +40,6 @@ const SiteTable = ({ sites }) => {
       duration: 2000,
       isClosable: false,
     });
-  };
-
-  const onDeleteIconClick = (e) => {
-    // TODO: Delete site by `e.target.id`
   };
 
   return (
@@ -107,14 +105,7 @@ const SiteTable = ({ sites }) => {
                 />
               </Td>
               <Td textAlign={"center"}>
-                <IconButton
-                  aria-label="Delete site"
-                  icon={<DeleteIcon pointerEvents={"none"} color="red.600" />}
-                  background={"transparent"}
-                  pointerEvents={"all"}
-                  onClick={onDeleteIconClick}
-                  id={site.id}
-                />
+                <DeleteSiteButton siteId={site.id} />
               </Td>
             </Box>
           ))}

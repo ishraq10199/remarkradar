@@ -46,7 +46,7 @@ export default function Dashboard() {
   return (
     <DashboardShell>
       <SiteTableHeader accountPlan={userAccountPlan} siteCount={0} />
-      {isPaidAccount ? <EmptyState /> : <UpgradeEmptyState />}
+      <EmptyState />
     </DashboardShell>
   );
 }

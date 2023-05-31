@@ -72,13 +72,12 @@ const AddSiteModal = ({ accountPlan, siteCount, children }) => {
     );
   };
 
-  // TODO: use the user's site count to choose what to render
-  // const siteLimitReached = accountPlan.includes("free")
-  //   ? +siteCount >= 3
-  //   : accountPlan.includes("starter")
-  //   ? +siteCount >= 20
-  //   : false;
-  const siteLimitReached = true;
+  console.log(accountPlan);
+  const siteLimitReached = accountPlan?.includes("free")
+    ? +siteCount >= 3
+    : accountPlan?.includes("starter")
+    ? +siteCount >= 20
+    : false;
 
   return (
     <>

@@ -17,23 +17,39 @@ import {
 import { useAuth } from "@/lib/auth";
 import { goToBillingPortal } from "@/lib/stripe";
 import { useState } from "react";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
-const FeedbackUsage = () => (
+
+const FeedbackUsage = ({ stripeRole, feedbackCount }) => (
   <StatGroup>
     <Stat>
       <StatLabel color="gray.700">Feedback</StatLabel>
-      <StatNumber fontWeight="medium">∞</StatNumber>
-      <StatHelpText>10,000 limit</StatHelpText>
+      <StatNumber fontWeight="medium">{feedbackCount}</StatNumber>
+      <StatHelpText>No limits</StatHelpText>
     </Stat>
 
     <Stat>
       <StatLabel color="gray.700">Sites</StatLabel>
-      <StatNumber fontWeight="medium">1/∞</StatNumber>
-      <StatHelpText>Unlimited Sites</StatHelpText>
+      <StatNumber fontWeight="medium">
+        1/
+        {stripeRole?.includes("free")
+          ? 3
+          : stripeRole?.includes("starter")
+          ? 20
+          : "∞"}
+      </StatNumber>
+      <StatHelpText>
+        {stripeRole?.includes("free")
+          ? "Max limit of three sites"
+          : stripeRole?.includes("starter")
+          ? "Max limit of twenty sites"
+          : "Unlimited sites"}
+      </StatHelpText>
     </Stat>
   </StatGroup>
 );
@@ -75,6 +91,10 @@ const SettingsTable = ({ stripeRole, children }) => (
 const Account = () => {
   const { user } = useAuth();
   const [isBillingLoading, setBillingLoading] = useState(false);
+  const { data } = useSWR(
+    user ? ["/api/feedbackCount", user.token] : null,
+    ([url, token]) => fetcher(url, token)
+  );
   return (
     <DashboardShell>
       <Flex
@@ -94,7 +114,10 @@ const Account = () => {
           <Text>{user?.email}</Text>
         </Flex>
         <SettingsTable stripeRole={user?.stripeRole}>
-          <FeedbackUsage />
+          <FeedbackUsage
+            stripeRole={user?.stripeRole}
+            feedbackCount={data ? data.count : "-"}
+          />
           <Text my={4}>
             Fast Feedback uses Stripe to update, change, or cancel your
             subscription. You can also update card information and billing

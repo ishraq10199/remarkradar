@@ -77,7 +77,6 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
         commentInputElement={commentInputElement}
         isFallback={router.isFallback}
       />
-
       {allFeedback &&
         allFeedback.map((feedback) => (
           <Feedback key={feedback.id} {...feedback} />

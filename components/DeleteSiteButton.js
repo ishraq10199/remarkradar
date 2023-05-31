@@ -11,25 +11,23 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { deleteFeedback } from "@/lib/db";
+import { deleteSite } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
 import { DeleteIcon } from "@chakra-ui/icons";
 
-const DeleteFeedbackButton = ({ feedbackId }) => {
+const DeleteSiteButton = ({ siteId }) => {
   const [isOpen, setIsOpen] = useState();
   const cancelRef = useRef();
   const auth = useAuth();
 
   const onClose = () => setIsOpen(false);
   const onDelete = async () => {
-    await deleteFeedback(feedbackId);
+    await deleteSite(siteId);
     mutate(
-      ["/api/feedback", auth.user.token],
+      ["/api/sites", auth.user.token],
       async (data) => {
         return {
-          feedback: data.feedback.filter(
-            (feedback) => feedback.id !== feedbackId
-          ),
+          sites: data.sites.filter((site) => site.id !== siteId),
         };
       },
       false
@@ -40,7 +38,7 @@ const DeleteFeedbackButton = ({ feedbackId }) => {
   return (
     <>
       <IconButton
-        aria-label="Delete feedback"
+        aria-label="Delete Site"
         icon={<DeleteIcon />}
         variant={"ghost"}
         colorScheme={"red"}
@@ -54,10 +52,11 @@ const DeleteFeedbackButton = ({ feedbackId }) => {
         <AlertDialogOverlay />
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Feedback
+            Delete Site
           </AlertDialogHeader>
           <AlertDialogBody>
-            Are you sure? You can&apos;t undo this action afterwards.
+            Are you sure? All site and feedback data will be removed. You
+            can&apos;t undo this action afterwards.
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
@@ -73,4 +72,4 @@ const DeleteFeedbackButton = ({ feedbackId }) => {
   );
 };
 
-export default DeleteFeedbackButton;
+export default DeleteSiteButton;
