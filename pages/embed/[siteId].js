@@ -3,7 +3,7 @@ import FeedbackLink from "@/components/FeedbackLink";
 import { useAuth } from "@/lib/auth";
 import { createFeedback } from "@/lib/db";
 import { getAllActiveFeedback, getAllSites } from "@/lib/db-admin";
-import { Box } from "@chakra-ui/react";
+import { Box, Heading, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { useRef, useState } from "react";
@@ -84,10 +84,14 @@ const EmbedFeedbackPage = ({ initialFeedback }) => {
           isFallback={router.isFallback}
         />
       )}
-      {allFeedback &&
+
+      {typeof allFeedback === "undefined" ? (
+        <Spinner size={"xl"} />
+      ) : (
         allFeedback.map((feedback) => (
           <Feedback key={feedback.id} {...feedback} />
-        ))}
+        ))
+      )}
     </Box>
   );
 };

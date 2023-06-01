@@ -15,9 +15,7 @@ const FeedbackRow = ({ id, author, text, route, status }) => {
   };
 
   const toggleTextOverflow = (e) => {
-    console.log(e.target.classList);
     if (!classNameForLineNums) classNameForLineNums = e.target.classList[0];
-    console.log(e);
     e.target.classList.toggle(classNameForLineNums);
     e.target.classList.toggle("css-1kwnuqq");
   };

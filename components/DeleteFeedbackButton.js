@@ -19,9 +19,11 @@ const DeleteFeedbackButton = ({ feedbackId }) => {
   const [isOpen, setIsOpen] = useState();
   const cancelRef = useRef();
   const auth = useAuth();
+  const [isDeleteButtonLoading, setIsDeleteButtonLoading] = useState(false);
 
   const onClose = () => setIsOpen(false);
   const onDelete = async () => {
+    setIsDeleteButtonLoading(true);
     await deleteFeedback(feedbackId);
     mutate(
       ["/api/feedback", auth.user.token],
@@ -63,7 +65,12 @@ const DeleteFeedbackButton = ({ feedbackId }) => {
             <Button ref={cancelRef} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme={"red"} onClick={onDelete} ml={3}>
+            <Button
+              colorScheme={"red"}
+              onClick={onDelete}
+              ml={3}
+              isLoading={isDeleteButtonLoading}
+            >
               Delete
             </Button>
           </AlertDialogFooter>

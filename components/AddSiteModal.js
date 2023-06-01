@@ -72,7 +72,6 @@ const AddSiteModal = ({ accountPlan, siteCount, children }) => {
     );
   };
 
-  console.log(accountPlan);
   const siteLimitReached = accountPlan?.includes("free")
     ? +siteCount >= 3
     : accountPlan?.includes("starter")

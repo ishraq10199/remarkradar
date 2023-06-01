@@ -10,7 +10,12 @@ import {
 import NextLink from "next/link";
 import { Table, Tr, Th, Td } from "./Table";
 import { parseISO, format } from "date-fns";
-import { CopyIcon } from "@chakra-ui/icons";
+import {
+  CopyIcon,
+  ExternalLinkIcon,
+  InfoIcon,
+  InfoOutlineIcon,
+} from "@chakra-ui/icons";
 import DeleteSiteButton from "./DeleteSiteButton";
 
 const SiteTable = ({ sites }) => {
@@ -66,6 +71,7 @@ const SiteTable = ({ sites }) => {
                     passHref={true}
                   >
                     {site.name}
+                    <ExternalLinkIcon fontSize={10} mx={2} mb={1} />
                   </Link>
                 ) : (
                   <Skeleton height="10px" w={50 + "px"} my={4} />

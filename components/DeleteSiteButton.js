@@ -20,8 +20,10 @@ const DeleteSiteButton = ({ siteId }) => {
   const cancelRef = useRef();
   const auth = useAuth();
 
+  const [isDeleteButtonLoading, setIsDeleteButtonLoading] = useState(false);
   const onClose = () => setIsOpen(false);
   const onDelete = async () => {
+    setIsDeleteButtonLoading(true);
     await deleteSite(siteId);
     mutate(
       ["/api/sites", auth.user.token],
@@ -62,7 +64,12 @@ const DeleteSiteButton = ({ siteId }) => {
             <Button ref={cancelRef} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme={"red"} onClick={onDelete} ml={3}>
+            <Button
+              colorScheme={"red"}
+              onClick={onDelete}
+              ml={3}
+              isLoading={isDeleteButtonLoading}
+            >
               Delete
             </Button>
           </AlertDialogFooter>

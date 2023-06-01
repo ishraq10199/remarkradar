@@ -34,7 +34,7 @@ export default function MyFeedback() {
         description:
           "If you can't read some of the comments, try clicking on the comment text to expand. Click again to truncate!",
         status: "info",
-        duration: 5000,
+        duration: 10000,
         isClosable: true,
       });
     }

@@ -6,8 +6,6 @@ export default async function handler(req, res) {
   try {
     const user = await auth.verifyIdToken(req.headers.token);
     const { count, error } = await getUserFeedbackCount(user.uid);
-    console.log("api request to /api/feedback-count");
-    console.log(count);
 
     res.status(200).json({ count });
   } catch (error) {
