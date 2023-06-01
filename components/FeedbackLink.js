@@ -35,9 +35,10 @@ export default function FeedbackLink({
           placeholder="Leave a comment"
           background={"gray.100"}
           color={"black"}
+          width="100vw"
         />
 
-        <Box display="flex" justifyContent={"space-between"}>
+        <Box display="flex" justifyContent={"space-between"} width="100vw">
           <Button
             mt={4}
             type="submit"
