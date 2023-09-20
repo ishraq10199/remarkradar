@@ -28,12 +28,7 @@ const SiteTable = ({ sites }) => {
   };
 
   const onCopyIconClick = (e) => {
-    const embedLink =
-      window.location.hostname +
-      ":" +
-      window.location.port +
-      "/embed/" +
-      e.target.id;
+    const embedLink = window.location.host + "/embed/" + e.target.id;
     navigator.clipboard.writeText(embedLink);
     toast({
       title: "Embed Link copied to clipboard!",
