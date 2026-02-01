@@ -7,7 +7,7 @@ Yes, it really *is* that simple.
 
   <img width="100%" alt="RemarkRadar Desktop View" src="https://github.com/user-attachments/assets/980f4220-fccf-4bcc-90fe-34a63aad89b4" />
   <img width="50%" alt="RemarkRadar Admin Panel" src="https://github.com/user-attachments/assets/9233eff8-49d8-4f82-83eb-a26954779dfd" />
-  <img width="50%" alt="RemarkRadar Mobile View" src="https://github.com/user-attachments/assets/3de19f4a-bdef-4418-9e71-8ba98f0039a6" />
+  <img width="49.5%" alt="RemarkRadar Mobile View" src="https://github.com/user-attachments/assets/3de19f4a-bdef-4418-9e71-8ba98f0039a6" />
 
 🔍 **Tip:** Visit the demo to check the comments on the site itself  
 (see the **Deployed Version** section below).
