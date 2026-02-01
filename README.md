@@ -1,5 +1,8 @@
 ## RemarkRadar
 
+> [!WARNING]  
+> I have cancelled some of the paid services on GCP that used to enable some extra Firebase stuff. So the demo link may not be _fully_ functional and _WILL_ have bugs now
+
 This is a project made with NextJS, using the page router. The backend uses Firebase for auth and storage. To summarize, this is a toy SaaS project involving an embeddable comments section to a website of your choice. I added three subscription tiers with Stripe.
 
 There are some issues with the app still, as I made this a long time ago when I had much less knowledge of JS and the web overall.
