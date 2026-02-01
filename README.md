@@ -19,6 +19,7 @@ Yes, it really *is* that simple.
 This project was built with:
 
 - ⚛️ **Next.js** (Page Router)
+- ⚡ **Chakra UI** for the UI components
 - 🔐 **Firebase** for authentication and data storage
 - 💳 **Stripe** for subscriptions (3 tiers)
 
