@@ -1,15 +1,12 @@
-## RemarkRadar
-
-<img width="2920" height="1735" alt="image" src="https://github.com/user-attachments/assets/980f4220-fccf-4bcc-90fe-34a63aad89b4" />
-<img width="2604" height="1544" alt="image" src="https://github.com/user-attachments/assets/9233eff8-49d8-4f82-83eb-a26954779dfd" />
-
-<img width="2610" height="1544" alt="image" src="https://github.com/user-attachments/assets/3de19f4a-bdef-4418-9e71-8ba98f0039a6" />
-
-
+# RemarkRadar - Embed comments made simple
 
 ## What is RemarkRadar?
 
 With RemarkRadar, you can embed a comments section on your website. Can be moderated through an admin panel. Yes, its that simple.
+
+<img width="720" alt="image" src="https://github.com/user-attachments/assets/980f4220-fccf-4bcc-90fe-34a63aad89b4" />
+<img width="720" alt="image" src="https://github.com/user-attachments/assets/9233eff8-49d8-4f82-83eb-a26954779dfd" />
+<img width="720" alt="image" src="https://github.com/user-attachments/assets/3de19f4a-bdef-4418-9e71-8ba98f0039a6" />
 
 Visit the demo to check the comments for the site itself! (check the `Deployed version` section below).
 
