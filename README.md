@@ -5,6 +5,8 @@
 **RemarkRadar** lets you embed a comments section on your website with ease — complete with moderation through an admin panel.  
 Yes, it really *is* that simple.
 
+> This was inspired by Lee Robinson's NextJS [course](https://masteringnextjs.com/), which was published in 2020
+
   <img width="100%" alt="RemarkRadar Desktop View" src="https://github.com/user-attachments/assets/980f4220-fccf-4bcc-90fe-34a63aad89b4" />
   <img width="50%" alt="RemarkRadar Admin Panel" src="https://github.com/user-attachments/assets/9233eff8-49d8-4f82-83eb-a26954779dfd" />
   <img width="49.5%" alt="RemarkRadar Mobile View" src="https://github.com/user-attachments/assets/3de19f4a-bdef-4418-9e71-8ba98f0039a6" />
